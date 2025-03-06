@@ -14,7 +14,7 @@ export interface LoginFormState {
 export interface LoginResult {
   success: boolean;
   error?: string;
-  data?: any;
+  data?: string|null;
 }
 
 const validateForm = (state: LoginFormState): string[] => {
@@ -68,7 +68,7 @@ const Login = () => {
     setIsSubmitting(true);
 
     try {
-      const result = await loginUser(state);
+      const result: LoginResult = await loginUser(state);
 
       if (result.success) {
         setErrors([]);
@@ -76,7 +76,7 @@ const Login = () => {
       } else {
         setErrors([result.error || "Login failed"]);
       }
-    } catch (error) {
+    } catch {
       setErrors(["An unexpected error occurred"]);
     } finally {
       setIsSubmitting(false);

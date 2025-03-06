@@ -1,11 +1,10 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { fetchBreeds, fetchDogDetails, fetchDogs } from '../api/dogService';
 import AboutDogCard, { Dog } from '../components/AboutDogCard';
 import PaginationController from '../components/PaginationController';
 import styles from '../dashboard/dashboard.module.css';
 import SearchDropdown from '../components/SearchDropdown';
-import { useRouter } from "next/navigation";
 import Link from 'next/link';
 
 interface SearchFormState {
@@ -25,15 +24,26 @@ interface ScreenState {
 }
 
 const Dashboard = () => {
-    const router = useRouter();
     const [screenState, setScreenState] = useState<ScreenState>({ isError: false, isSuccess: false, isLoading: true, data: null, availableBreed: [] });
     const [formState, setFormState] = useState<SearchFormState>({ search: '', from: 0, breeds: [], sort: "asc" });
     const [selectedDogs, setSelectedDogs] = useState<Dog[]>([]);
 
+    const fetchResults = useCallback(async () => {
+        setScreenState((prev) => ({ ...prev, isLoading: true }));
+        try {
+            const searchResult = await fetchDogs(formState.from, formState.breeds, formState.sort);
+            const dogsResult = await fetchDogDetails(searchResult.resultIds);
+            setScreenState((prev) => ({ ...prev, isLoading: false, isSuccess: true, isError: false, data: dogsResult }));
+        } catch (error) {
+            console.error('Fetch failed:', error);
+            setScreenState((prev) => ({ ...prev, isLoading: false, isSuccess: false, isError: true, error: error instanceof Error ? error.message : String(error), data: null }));
+        }
+    }, [formState]);
+
     useEffect(() => {
         fetchBreedsList();
         fetchResults();
-    }, [formState.from, formState.search, formState.sort, formState.breeds]);
+    }, [formState.from, formState.search, formState.sort, formState.breeds, fetchResults]);
 
     const fetchBreedsList = async () => {
         try {
@@ -62,18 +72,6 @@ const Dashboard = () => {
 
     const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setFormState({ ...formState, sort: event.target.value as 'asc' | 'desc' });
-    };
-
-    const fetchResults = async () => {
-        setScreenState((prev) => ({ ...prev, isLoading: true }));
-        try {
-            const searchResult = await fetchDogs(formState.from, formState.breeds, formState.sort);
-            const dogsResult = await fetchDogDetails(searchResult.resultIds);
-            setScreenState((prev) => ({ ...prev, isLoading: false, isSuccess: true, isError: false, data: dogsResult }));
-        } catch (error) {
-            console.error('Fetch failed:', error);
-            setScreenState((prev) => ({ ...prev, isLoading: false, isSuccess: false, isError: true, error: error instanceof Error ? error.message : String(error), data: null }));
-        }
     };
 
     const handleSelectDog = (dog: Dog) => {

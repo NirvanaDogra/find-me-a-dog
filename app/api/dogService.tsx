@@ -1,5 +1,6 @@
+import { Dog } from "../components/AboutDogCard";
 
-export async function fetchDogs(from: number, breeds: Array<string>, sortOrder: string): Promise<any> {
+export async function fetchDogs(from: number, breeds: Array<string>, sortOrder: string): Promise<{ resultIds: string[] }> {
   let url = `https://frontend-take-home-service.fetch.com/dogs/search?from=${from}&size=24&sort=breed:${sortOrder}`;
   if (breeds && breeds.length > 0) {
     url += breeds.map(breed => `&breeds[]=${encodeURIComponent(breed)}`).join('');
@@ -16,7 +17,7 @@ export async function fetchDogs(from: number, breeds: Array<string>, sortOrder: 
   return await response.json();
 }
 
-export async function fetchBreeds(): Promise<any> {
+export async function fetchBreeds(): Promise<string[]> {
   const url = `https://frontend-take-home-service.fetch.com/dogs/breeds`;
   const options: RequestInit = {
     method: "GET",
@@ -30,7 +31,7 @@ export async function fetchBreeds(): Promise<any> {
   return await response.json();
 }
 
-export async function fetchDogDetails(dogIds: Array<string>): Promise<any> {
+export async function fetchDogDetails(dogIds: Array<string>): Promise<Dog[]> {
   const url = `https://frontend-take-home-service.fetch.com/dogs`;
   const options: RequestInit = {
     method: "POST",

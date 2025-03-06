@@ -18,8 +18,6 @@ const SearchDropdown = ({
     const [showDropdown, setShowDropdown] = useState(false);
     const [filteredBreeds, setFilteredBreeds] = useState<string[]>(availableBreeds);
     const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         setFilteredBreeds(availableBreeds);
@@ -50,8 +48,6 @@ const SearchDropdown = ({
 
     return (
         <div className={styles.searchContainer}>
-            {loading && <div className={styles.loading}>Loading...</div>}
-            {error && <div className={styles.error}>{error}</div>}
             <div className={styles.inputWrapper}>
                 {selectedBreeds.map((breed, index) => (
                     <Chips key={index} name={breed} onRemove={handleChipRemove} />
