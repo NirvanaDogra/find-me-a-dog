@@ -1,14 +1,15 @@
 'use client';
-import React, { useState, Suspense } from 'react';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { useRouter, useSearchParams } from 'next/navigation';
-import AboutDogCard, { Dog } from '../components/AboutDogCard';
-import styles from '../dashboard/dashboard.module.css';
+import { Suspense, useState } from 'react';
 import { fetchDogDetails, matchDogs } from '../api/dogService';
+import AboutDogCard, { Dog } from '../components/AboutDogCard';
 import Modal from '../components/Modal';
+import styles from './selectdog.module.css';
 
 const SelectedDogsPage = () => {
     const router = useRouter();
-    
+
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <SelectedDogsContent router={router} />
@@ -16,10 +17,10 @@ const SelectedDogsPage = () => {
     );
 };
 
-const SelectedDogsContent = ({ router }) => {
+const SelectedDogsContent = ({ router }: { router: AppRouterInstance }) => {
     const searchParams = useSearchParams();
     const selectedDogs = searchParams.get('selectedDogs');
-    
+
     const dogs: Dog[] = selectedDogs ? JSON.parse(selectedDogs) : [];
     const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,10 +44,10 @@ const SelectedDogsContent = ({ router }) => {
 
     return (
         <div>
-            <h2 style={{ textAlign: 'center', padding: "40px"}}>Selected Dogs</h2>
-            <div className={styles.row}>
+            <h2 style={{ textAlign: 'center', padding: "40px" }}>Selected Dogs</h2>
+            <div className={styles.grid}>
                 {dogs.map((dog) => (
-                    <AboutDogCard dog={dog} key={dog.id} onSelect={() => {}} isSelected={true} />
+                    <AboutDogCard dog={dog} key={dog.id} onSelect={() => { }} isSelected={true} />
                 ))}
             </div>
             <button className={styles.confirmButton} onClick={handleConfirm}>
@@ -54,8 +55,8 @@ const SelectedDogsContent = ({ router }) => {
             </button>
             {isModalOpen && matchedDog && (
                 <Modal onClose={closeModal} showCloseButton={true}>
-                    <h2 style={{ textAlign: 'center', color: "black" }}>You Matched!</h2>
-                    <AboutDogCard dog={matchedDog} key={matchedDog.id} onSelect={() => {}} isSelected={true} />
+                    <h2 style={{ textAlign: 'center', color: "black", marginBottom: "30px" }}>You Matched!</h2>
+                    <AboutDogCard dog={matchedDog} key={matchedDog.id} onSelect={() => { }} isSelected={true} />
                 </Modal>
             )}
         </div>

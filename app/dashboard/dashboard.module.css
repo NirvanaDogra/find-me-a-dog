@@ -17,6 +17,28 @@
     gap: 0.5rem;
 }
 
+.headerContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logoutButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 1rem 2rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.logoutButton:hover {
+    background-color: #0056b3;
+}
 
 .loadingScreen {
     display: flex;
