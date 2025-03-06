@@ -98,14 +98,15 @@ const Dashboard = () => {
 
     return (
         <>
-            <header className={styles.background}>
+            <header className={styles.header}>
                 <SearchDropdown
                     search={formState.search}
                     availableBreeds={screenState.availableBreed || []}
                     onInputChange={handleInputChange}
                     onBreedChange={handleBreedChange}
                 />
-                <select className={styles.select} value={formState.sort} onChange={handleSortChange}>
+                <label htmlFor="sortByBreed">Sort By Breed</label>
+                <select id="sortByBreed" className={styles.select} value={formState.sort} onChange={handleSortChange}>
                     <option value="asc">Ascending</option>
                     <option value="desc">Descending</option>
                 </select>
@@ -113,7 +114,7 @@ const Dashboard = () => {
                     Logout
                 </button>
             </header>
-            <main>
+            <main className={styles.main}>
                 {screenState.isLoading && <div className={styles.loadingScreen}>Loading...</div>}
                 {screenState.isError && <div className={styles.errorScreen}>Error: {screenState.error}</div>}
                 {screenState.isSuccess && <DogResults data={screenState.data || null} onSelectDog={handleSelectDog} selectedDogs={selectedDogs} />}
@@ -140,7 +141,7 @@ const Dashboard = () => {
 const DogResults = ({ data, onSelectDog, selectedDogs }: { data: Dog[] | null, onSelectDog: (dog: Dog) => void, selectedDogs: Dog[] }) => (
     <section>
         <h2 style={{ textAlign: 'center', padding: "10px" }}>Find Dogs in Area</h2>
-        <div className={styles.row}>
+        <div className={styles.grid}>
             {data && data.length > 0 ? data.map((dog) => {
                 const isSelected = selectedDogs.filter(d => d.id === dog.id).length > 0;
                 return <AboutDogCard dog={dog} key={dog.id} onSelect={onSelectDog} isSelected={isSelected} />;

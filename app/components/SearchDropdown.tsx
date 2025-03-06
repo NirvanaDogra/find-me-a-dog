@@ -39,23 +39,22 @@ const SearchDropdown = ({
             ? selectedBreeds.filter(selectedBreed => selectedBreed !== breed)
             : [...selectedBreeds, breed];
         setSelectedBreeds(updatedSelectedBreeds);
-        onBreedChange(breed); 
+        onBreedChange(breed);
         setShowDropdown(false);
     };
 
     const handleChipRemove = (breed: string) => {
         setSelectedBreeds(selectedBreeds.filter((selectedBreed) => selectedBreed !== breed));
-        onBreedChange(breed); 
+        onBreedChange(breed);
     };
 
     return (
         <div className={styles.searchContainer}>
-            <div className={styles.inputWrapper}>
+            <div className={styles.searchinputWrapper}>
                 {selectedBreeds.map((breed, index) => (
                     <Chips key={index} name={breed} onRemove={handleChipRemove} />
                 ))}
-                <input
-                    className={styles.search}
+                <input className={styles.search}
                     type="text"
                     placeholder="Search for dogs in your area"
                     value={search}
