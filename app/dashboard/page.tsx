@@ -1,11 +1,13 @@
 'use client';
 import React, { useEffect, useState, useCallback } from 'react';
 import { fetchBreeds, fetchDogDetails, fetchDogs } from '../api/dogService';
+import { logoutUser } from '../api/auth';
 import AboutDogCard, { Dog } from '../components/AboutDogCard';
 import PaginationController from '../components/PaginationController';
-import styles from '../dashboard/dashboard.module.css';
 import SearchDropdown from '../components/SearchDropdown';
+import styles from '../dashboard/dashboard.module.css';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface SearchFormState {
     search: string;
@@ -24,6 +26,7 @@ interface ScreenState {
 }
 
 const Dashboard = () => {
+    const router = useRouter();
     const [screenState, setScreenState] = useState<ScreenState>({ isError: false, isSuccess: false, isLoading: true, data: null, availableBreed: [] });
     const [formState, setFormState] = useState<SearchFormState>({ search: '', from: 0, breeds: [], sort: "asc" });
     const [selectedDogs, setSelectedDogs] = useState<Dog[]>([]);
@@ -84,6 +87,15 @@ const Dashboard = () => {
         });
     };
 
+    const handleLogout = async () => {
+        try {
+            await logoutUser();
+            router.replace('/login');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
+    };
+
     return (
         <>
             <header className={styles.background}>
@@ -97,6 +109,9 @@ const Dashboard = () => {
                     <option value="asc">Ascending</option>
                     <option value="desc">Descending</option>
                 </select>
+                <button className={styles.logoutButton} onClick={handleLogout}>
+                    Logout
+                </button>
             </header>
             <main>
                 {screenState.isLoading && <div className={styles.loadingScreen}>Loading...</div>}
