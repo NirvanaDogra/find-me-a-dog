@@ -8,21 +8,23 @@ import Modal from '../components/Modal';
 import styles from './selectdog.module.css';
 
 const SelectedDogsPage = () => {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const selectedDogs = searchParams.get('selectedDogs');
-
-    const dogs: Dog[] = selectedDogs ? JSON.parse(selectedDogs) : [];
-
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <SelectedDogsContent router={router} dogs={dogs} />
+            <SelectedDogsContentWrapper />
         </Suspense>
     );
 };
 
-const SelectedDogsContent = ({ router , dogs}: { router: AppRouterInstance, dogs: Dog[] }) => {
+const SelectedDogsContentWrapper = () => {
+    const searchParams = useSearchParams();
+    const selectedDogs = searchParams.get('selectedDogs');
+    const dogs: Dog[] = selectedDogs ? JSON.parse(selectedDogs) : [];
 
+    return <SelectedDogsContent dogs={dogs} />;
+};
+
+const SelectedDogsContent = ({ dogs }: { dogs: Dog[] }) => {
+    const router = useRouter();
     const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
