@@ -10,13 +10,9 @@ import styles from './selectdog.module.css';
 const SelectedDogsPage = () => {
     return (
         <Suspense fallback={<div>Loading...</div>}>
-            <SelectedDogsContentWrapper />
+            <SelectedDogsContent />
         </Suspense>
     );
-};
-
-const SelectedDogsContentWrapper = () => {
-    return <SelectedDogsContent />;
 };
 
 const SelectedDogsContent = () => {
