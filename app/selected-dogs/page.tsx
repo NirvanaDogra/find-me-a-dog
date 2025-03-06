@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import AboutDogCard, { Dog } from '../components/AboutDogCard';
 import styles from '../dashboard/dashboard.module.css';
@@ -8,8 +8,18 @@ import Modal from '../components/Modal';
 
 const SelectedDogsPage = () => {
     const router = useRouter();
+    
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <SelectedDogsContent router={router} />
+        </Suspense>
+    );
+};
+
+const SelectedDogsContent = ({ router }) => {
     const searchParams = useSearchParams();
     const selectedDogs = searchParams.get('selectedDogs');
+    
     const dogs: Dog[] = selectedDogs ? JSON.parse(selectedDogs) : [];
     const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
