@@ -1,0 +1,26 @@
+.chip {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0.2rem 0;
+    background-color: #007bff;
+    color: white;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chip:hover {
+    background-color: #0056b3;
+}
+
+.removeButton {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
