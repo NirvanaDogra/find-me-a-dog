@@ -9,19 +9,20 @@ import styles from './selectdog.module.css';
 
 const SelectedDogsPage = () => {
     const router = useRouter();
-
-    return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <SelectedDogsContent router={router} />
-        </Suspense>
-    );
-};
-
-const SelectedDogsContent = ({ router }: { router: AppRouterInstance }) => {
     const searchParams = useSearchParams();
     const selectedDogs = searchParams.get('selectedDogs');
 
     const dogs: Dog[] = selectedDogs ? JSON.parse(selectedDogs) : [];
+
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <SelectedDogsContent router={router} dogs={dogs} />
+        </Suspense>
+    );
+};
+
+const SelectedDogsContent = ({ router , dogs}: { router: AppRouterInstance, dogs: Dog[] }) => {
+
     const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
