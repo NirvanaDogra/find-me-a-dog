@@ -1,13 +1,13 @@
 'use client';
-import React, { useEffect, useState, useCallback } from 'react';
-import { fetchBreeds, fetchDogDetails, fetchDogs } from '../api/dogService';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { Suspense, useEffect, useState } from 'react';
 import { logoutUser } from '../api/auth';
+import { fetchBreeds, fetchDogDetails, fetchDogs } from '../api/dogService';
 import AboutDogCard, { Dog } from '../components/AboutDogCard';
 import PaginationController from '../components/PaginationController';
 import SearchDropdown from '../components/SearchDropdown';
 import styles from '../dashboard/dashboard.module.css';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 interface SearchFormState {
     search: string;
@@ -31,7 +31,7 @@ const Dashboard = () => {
     const [formState, setFormState] = useState<SearchFormState>({ search: '', from: 0, breeds: [], sort: "asc" });
     const [selectedDogs, setSelectedDogs] = useState<Dog[]>([]);
 
-    const fetchResults = useCallback(async () => {
+    const fetchResults = async () => {
         setScreenState((prev) => ({ ...prev, isLoading: true }));
         try {
             const searchResult = await fetchDogs(formState.from, formState.breeds, formState.sort);
@@ -41,12 +41,12 @@ const Dashboard = () => {
             console.error('Fetch failed:', error);
             setScreenState((prev) => ({ ...prev, isLoading: false, isSuccess: false, isError: true, error: error instanceof Error ? error.message : String(error), data: null }));
         }
-    }, [formState.from, formState.sort, formState.breeds]);
+    }
 
     useEffect(() => {
         fetchBreedsList();
         fetchResults();
-    }, [formState.from, formState.search, formState.sort, formState.breeds, fetchResults]);
+    }, [formState.from, formState.search, formState.sort, formState.breeds]);
 
     const fetchBreedsList = async () => {
         try {
@@ -126,11 +126,13 @@ const Dashboard = () => {
                     }}
                 />
                 {selectedDogs.length > 0 && (
-                    <Link href={{ pathname: '/selected-dogs', query: { selectedDogs: JSON.stringify(selectedDogs) } }}>
-                        <button className={styles.stickyButton}>
-                            Send Selected Dogs
-                        </button>
-                    </Link>
+                    <Suspense fallback={<div>Loading button...</div>}>
+                        <Link href={{ pathname: '/selected-dogs', query: { selectedDogs: JSON.stringify(selectedDogs) } }}>
+                            <button className={styles.stickyButton}>
+                                Send Selected Dogs
+                            </button>
+                        </Link>
+                    </Suspense>
                 )}
             </footer>
         </>
