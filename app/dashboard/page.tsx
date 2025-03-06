@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { logoutUser } from '../api/auth';
 import { fetchBreeds, fetchDogDetails, fetchDogs } from '../api/dogService';
 import AboutDogCard, { Dog } from '../components/AboutDogCard';
@@ -126,13 +126,11 @@ const Dashboard = () => {
                     }}
                 />
                 {selectedDogs.length > 0 && (
-                    <Suspense fallback={<div>Loading button...</div>}>
-                        <Link href={{ pathname: '/selected-dogs', query: { selectedDogs: JSON.stringify(selectedDogs) } }}>
-                            <button className={styles.stickyButton}>
-                                Send Selected Dogs
-                            </button>
-                        </Link>
-                    </Suspense>
+                    <Link href={{ pathname: '/selected-dogs', query: { selectedDogs: JSON.stringify(selectedDogs) } }}>
+                        <button className={styles.stickyButton}>
+                            Send Selected Dogs
+                        </button>
+                    </Link>
                 )}
             </footer>
         </>
