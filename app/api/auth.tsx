@@ -34,7 +34,7 @@ export async function loginUser(credentials: LoginFormState): Promise<LoginResul
             error: error instanceof Error ? error.message : "Network error"
         };
     }
-}
+}  
 
 export async function logoutUser(): Promise<void> {
     const url = `https://frontend-take-home-service.fetch.com/auth/logout`;
