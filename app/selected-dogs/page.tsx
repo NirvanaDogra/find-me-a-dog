@@ -1,5 +1,5 @@
 'use client';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import { fetchDogDetails, matchDogs } from '../api/dogService';
@@ -16,15 +16,15 @@ const SelectedDogsPage = () => {
 };
 
 const SelectedDogsContentWrapper = () => {
+    return <SelectedDogsContent />;
+};
+
+const SelectedDogsContent = () => {
     const searchParams = useSearchParams();
+    const router = useRouter();
     const selectedDogs = searchParams.get('selectedDogs');
     const dogs: Dog[] = selectedDogs ? JSON.parse(selectedDogs) : [];
 
-    return <SelectedDogsContent dogs={dogs} />;
-};
-
-const SelectedDogsContent = ({ dogs }: { dogs: Dog[] }) => {
-    const router = useRouter();
     const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 

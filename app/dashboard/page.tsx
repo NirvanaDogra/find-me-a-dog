@@ -41,7 +41,7 @@ const Dashboard = () => {
             console.error('Fetch failed:', error);
             setScreenState((prev) => ({ ...prev, isLoading: false, isSuccess: false, isError: true, error: error instanceof Error ? error.message : String(error), data: null }));
         }
-    }, [formState.from, formState.search, formState.sort, formState.breeds]);
+    }, [formState.from, formState.sort, formState.breeds]);
 
     useEffect(() => {
         fetchBreedsList();

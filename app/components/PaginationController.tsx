@@ -6,7 +6,7 @@ const PaginationController = ({ totalPages, onPageChange }: { totalPages: number
     console.log('totalPages', totalPages);
     useEffect(() => {
         onPageChange(currentPage - 1);
-    }, [currentPage]);
+    }, [currentPage, onPageChange]);
 
     const goToPage = (page: number) => {
         if (page < 1 || page > totalPages) return;
