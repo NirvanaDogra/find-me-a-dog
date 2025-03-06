@@ -3,7 +3,6 @@ import styles from "../dashboard/dashboard.module.css";
 
 const PaginationController = ({ totalPages, onPageChange }: { totalPages: number, onPageChange: (num: number) => void }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    console.log('totalPages', totalPages);
     useEffect(() => {
         onPageChange(currentPage - 1);
     }, [currentPage]);

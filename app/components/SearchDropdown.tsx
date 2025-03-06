@@ -20,8 +20,10 @@ const SearchDropdown = ({
     const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
 
     useEffect(() => {
-        setFilteredBreeds(availableBreeds);
-    }, [availableBreeds]);
+        setFilteredBreeds(
+            availableBreeds.filter((breed) => breed.toLowerCase().includes(search.toLowerCase()))
+        );
+    }, [availableBreeds, search]);
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         onInputChange(event);

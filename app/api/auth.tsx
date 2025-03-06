@@ -1,4 +1,4 @@
-import { LoginFormState, LoginResult } from "../login/page";
+import { LoginFormState, LoginResult } from "../page";
 
 export async function loginUser(credentials: LoginFormState): Promise<LoginResult> {
     const url = `https://frontend-take-home-service.fetch.com/auth/login`;

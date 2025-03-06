@@ -46,7 +46,7 @@ const Dashboard = () => {
     useEffect(() => {
         fetchBreedsList();
         fetchResults();
-    }, [formState.from, formState.search, formState.sort, formState.breeds]);
+    }, [formState.from, formState.sort, formState.breeds]);
 
     const fetchBreedsList = async () => {
         try {
@@ -69,7 +69,7 @@ const Dashboard = () => {
             const breeds = prev.breeds.includes(selectedBreed)
                 ? prev.breeds.filter(breed => breed !== selectedBreed)
                 : [...prev.breeds, selectedBreed];
-            return { ...prev, breeds };
+            return { ...prev, breeds, search: ""};
         });
     };
 
@@ -90,7 +90,7 @@ const Dashboard = () => {
     const handleLogout = async () => {
         try {
             await logoutUser();
-            router.replace('/login');
+            router.replace('/');
         } catch (error) {
             console.error('Logout failed:', error);
         }
