@@ -69,7 +69,7 @@ const Dashboard = () => {
             const breeds = prev.breeds.includes(selectedBreed)
                 ? prev.breeds.filter(breed => breed !== selectedBreed)
                 : [...prev.breeds, selectedBreed];
-            return { ...prev, breeds, search: ""};
+            return { ...prev, breeds, search: "" };
         });
     };
 
@@ -105,7 +105,7 @@ const Dashboard = () => {
                     onInputChange={handleInputChange}
                     onBreedChange={handleBreedChange}
                 />
-                <label htmlFor="sortByBreed">Sort By Breed</label>
+                <label className={styles.label} htmlFor="sortByBreed">Sort By Breed</label>
                 <select id="sortByBreed" className={styles.select} value={formState.sort} onChange={handleSortChange}>
                     <option value="asc">Ascending</option>
                     <option value="desc">Descending</option>

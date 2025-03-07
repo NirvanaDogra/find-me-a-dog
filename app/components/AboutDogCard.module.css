@@ -1,8 +1,9 @@
 .card {
+    margin: var(--padding-1);
     height: 450px;
     width: 300px;
-    background-color: white;
-    border: 2px solid #ccc;
+    background-color: var(--foreground);
+    border: 2px solid var(--foreground);;
     border-radius: 1rem;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -23,40 +24,25 @@
     object-fit: cover;
     width: 100%;
     height: 60%;
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
+    border-top-left-radius: var(--border-radius-8);
+    border-top-right-radius: var(--border-radius-8);
 }
 
 .details {
-    padding: 1rem;
+    padding: var(--padding-8);
     text-align: center;
 }
 
 .details h3 {
     margin: 0.5rem 0;
     font-size: 1.5rem;
-    color: #333;
+    color: var(--background);
 }
 
 .details p {
     margin: 0.25rem 0;
     font-size: 1rem;
-    color: #666;
-}
-
-.likeButton {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #ff6b6b;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.likeButton:hover {
-    background-color: #ff4c4c;
+    color: var(--secondary-color);
 }
 
 .selectButton {
@@ -72,9 +58,4 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-}
-
-.tickMark {
-    color: #007bff;
-    font-size: 1rem;
 }

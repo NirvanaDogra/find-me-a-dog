@@ -42,7 +42,7 @@ const SelectedDogsContent = () => {
     };
 
     return (
-        <div>
+        <div className={styles.container}>
             <h2 style={{ textAlign: 'center', padding: "40px" }}>Selected Dogs</h2>
             <div className={styles.grid}>
                 {dogs.map((dog) => (
@@ -54,7 +54,7 @@ const SelectedDogsContent = () => {
             </button>
             {isModalOpen && matchedDog && (
                 <Modal onClose={closeModal} showCloseButton={true}>
-                    <h2 style={{ textAlign: 'center', color: "black", marginBottom: "30px" }}>You Matched!</h2>
+                    <h2 style={{ textAlign: 'center', color: "white", marginBottom: "30px" }}>You Matched!</h2>
                     <AboutDogCard dog={matchedDog} key={matchedDog.id} onSelect={() => { }} isSelected={true} />
                 </Modal>
             )}
